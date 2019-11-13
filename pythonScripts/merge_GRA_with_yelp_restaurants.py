@@ -18,7 +18,7 @@ restaurants_and_reviews = yelp_businesses.merge(yelp_reviews, left_on='business_
                                                 how='inner', suffixes=['_biz', '_test'])
 restaurants_and_reviews = restaurants_and_reviews.groupby('name')['text'].apply(list).to_frame().reset_index()
 restaurants_and_reviews = restaurants_and_reviews.sort_values(['name'])
-restaurants_and_reviews.to_csv('../data/restaurants_and_reviews.csv', index=False)
+restaurants_and_reviews.to_csv('../data/big_restaurants_and_reviews.csv', index=False)
 small_businesses_and_reviews = restaurants_and_reviews.head(5000)
 small_businesses_and_reviews.to_csv('../data/small_restaurants_and_reviews.csv', index=False)
 
