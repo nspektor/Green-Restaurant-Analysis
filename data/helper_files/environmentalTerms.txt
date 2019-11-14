@@ -3,10 +3,7 @@ biobased
 biodegradable
 biodynamic
 chemical-free
-co-op
-community
-conscious
-durable
+eco-conscious
 earth-conscious
 earth conscious
 earth friendly
@@ -16,55 +13,36 @@ eco-friendly
 ecofriendly
 eco friendly
 ecological
-economical
 less toxic
 less wasteful
-local
-locally grown/raised
+locally grown
+locally raised
 low-impact
 natural
-naturally
-naturally derived
-next to natural
-non-toxic
 organic
 organically produced
-outdoor
 planet-friendly
 post-consumer
-pure
-re-crafted
-re-used
 energy-efficient
 energy-saving
 environmental
 environmentally conscious
 environmentally friendly
 environmentally responsible
-fair trade
 farm-raised
 free range
 good-for-the-earth
 good-for-you
 green
 greener
-hand-carved
-handmade
-healthy
-high quality
 recyclable
 recycled
+recycling
 renewable
 resource-saving
-resourceful
-responsible
-salvaged
 single-origin
 sustainable
-toxin-free
-transparent
-vegan
-vegetarian
+sustainability
 vegetarian-fed
 waste-reducing
 wholesome
@@ -72,30 +50,19 @@ Earth Day
 Mother Nature
 alternative energy
 alternative forms of energy
-alternative technology
-alternatives
-bike fundraiser
 bio-energy
 biofuel
 carbon footprint
-community
 composting
+compost
+compostable
 conscious consumer
 conservation
-craftspeople
 earth
 eco-choice
 ecotourism
 hydroelectric power
-land reuse
 lesser impact
-life
-lifestyle
-liveability
-living
-mindset
-mission
-natives
 natural alternative
 natural ingredients
 natural world
@@ -104,7 +71,6 @@ negative carbon footprint
 next generation
 outdoors
 planet
-prevention
 reusable
 energy
 energy alternative
@@ -112,14 +78,13 @@ energy audit
 energy efficiency
 energy usage
 environment
+environmentally friendly
+environmentally
 environmental commitment
 environmental impact
 environmental initiatives
 environmentalist
-farming
 footprint
-fuel cells
-future
 global warming prevention
 green initiative
 green living
@@ -127,8 +92,8 @@ green routine
 green technology
 green zone
 greener choices
-health
-hemp
+green
+go green
 recycled material
 recycling program
 reduction
@@ -145,12 +110,6 @@ sustainable living
 tree hugger
 waste management
 waste prevention
-wellness
-wildlife habitat
-wind turbines
-worthwhile cause
-benefit
-bike
 plant-based
 plant based
 biodegrade
@@ -162,41 +121,20 @@ consume less
 decompose
 live a green lifestyle
 live green
-live thoughtfully
-make a difference
-make an effort
 plant
-preserve
-prevent
-protect
-reclaim
-reconnect
-recover
 recycle
 reduce
-dispose
-donate
-empower
-farm
+reuse
 get into a green routine
-go green
-green
 harvest
 help the environment
 help environment
 impact the planet
 incorporate sustainable practices
 reduce impact
-refill
 repurpose
 respect
-rethink
-reuse
-safeguard
-salvage
 save the planet
-unplug
-use less
 100% recycled
 benefit both your family and the environment
 a good choice for the environment
@@ -221,28 +159,25 @@ is the ultimate eco-choice
 part of a low-impact lifestyle
 part of living an eco-friendly lifestyle
 post-consumer recycled material
-prevent/stop/slow global warming
+global warming
 printed on recycled paper
 raised without antibiotics or growth stimulants
 reconnect us to the natural world
 reduce, reuse, and recycle
 reduces the need for
-save energy/resources/money
+save energy
 eco-
 eco-friendly alternatives for the next generation
 even small changes can make a big difference
-fashioned from organic/reclaimed/sustainable
 for future generations
 get into a green routine
 go green with style
 good for you and the earth
-green lifestyle/mindset/practices
+green practices
 green to the core
 green your home/office/lifestyle
 grown by a local co-op of family ranchers
 how to green your
-it's more than a, it's a way of life
-it's only natural
 save the planet
 saving the earth, one at a time
 the power is in your hands

@@ -6,11 +6,24 @@ from nltk.tokenize import word_tokenize
 
 from nltk.stem import WordNetLemmatizer
 import re
+import argparse
+
+parser = argparse.ArgumentParser(description='env term small or big')
+parser.add_argument("--small", default=False, type=bool, help="When true, run on smaller data")
+args = parser.parse_args()
+small = args.small
 
 environmentalTerms = [line.rstrip('\n') for line in open("../data/helper_files/environmentalTerms.txt")]
 environmentalTerms = list(dict.fromkeys(environmentalTerms))
-restaurants_and_reviews = pd.read_csv("../data/big_name_review_green.csv")
-restaurants_and_reviews = restaurants_and_reviews.head(500)
+if small:
+    restaurants_and_reviews_file = "../data/small_restaurants_and_reviews.csv"
+    term_based_file = "../data/small_term_based_green_rating_results.csv"
+    print("smallness achieved")
+else:
+    restaurants_and_reviews_file = "../data/big_restaurants_and_reviews.csv"
+    term_based_file = "../data/big_term_based_green_rating_results.csv"
+    print("we livin large")
+restaurants_and_reviews = pd.read_csv(restaurants_and_reviews_file)
 
 
 def pre_process(text):
@@ -31,7 +44,7 @@ def pre_process(text):
     return text  # lemmatized_output
 
 
-restaurants_and_reviews['text'] = restaurants_and_reviews['text'].apply(lambda x: pre_process(x))
+restaurants_and_reviews['review_text'] = restaurants_and_reviews['review_text'].apply(lambda x: pre_process(x))
 
 
 # def get_env_terms(text):
@@ -43,7 +56,7 @@ restaurants_and_reviews['text'] = restaurants_and_reviews['text'].apply(lambda x
 
 def get_env_term_counts(restaurant):
     terms = environmentalTerms
-    env_terms_in_text = [term for term in terms if term in restaurant['text']]
+    env_terms_in_text = [term for term in terms if term in restaurant['review_text']]
     # sum = 0
     # for term in restaurant['env_terms'].split(", "):
     #     #         print(term , " count " , rest['text'].count(term))
@@ -56,7 +69,7 @@ restaurants_and_reviews['env_term_counts'] = restaurants_and_reviews.apply(
     lambda x: get_env_term_counts(x), axis=1)
 restaurants_and_reviews.sort_values(['env_term_counts'], ascending=False, inplace=True)
 
-restaurants_and_reviews['len'] = restaurants_and_reviews['text'].str.split().apply(len)
+restaurants_and_reviews['len'] = restaurants_and_reviews['review_text'].str.split().apply(len)
 
 restaurants_and_reviews['env_terms_percent_of_overall_words'] = (
         restaurants_and_reviews['env_term_counts'] / restaurants_and_reviews['len'])
@@ -68,11 +81,6 @@ restaurants_and_reviews['term_based_green_rating'] = pd.cut(
     restaurants_and_reviews['env_terms_percent_of_overall_words'],
     bins=bins, labels=labels)
 
-# greenest = businesses_and_reviews.loc[businesses_and_reviews['green_rating'] == 3]
-# greenest[['name', 'text', 'green_rating']].to_csv('../data/greenest.csv')
-
-restaurants_and_reviews[['name', 'term_based_green_rating', 'text']].to_csv(
-    '../data/big_term_based_green_rating_results.csv', index=False)
-
-restaurants_and_reviews[['name', 'term_based_green_rating', 'rating', 'text']]\
-    .to_csv('../data/big_comprehensive_results.csv', index=False)
+print(restaurants_and_reviews.head())
+restaurants_and_reviews[['name', 'term_based_green_rating']].to_csv(
+    term_based_file, index=False)

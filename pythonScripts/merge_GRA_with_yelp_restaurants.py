@@ -1,32 +1,32 @@
-# Combine reviews with businesses and add a green rating
+# combine all green ratings with yelp data
+
 import pandas as pd
+import argparse
 
-yelp_reviews = pd.read_csv('../data/original_sources/YelpReview.csv', header=0)
-yelp_businesses = pd.read_csv('../data/clean_yelp_restaurants.csv', header=0)
+parser = argparse.ArgumentParser(description='small or big')
+parser.add_argument("--small", default=False, type=bool, help="When true, run on smaller data")
+args = parser.parse_args()
+small = args.small
 
-# Yelp Business and Review Data
-yelp_businesses = yelp_businesses.drop_duplicates(subset=['business_id'])
-yelp_businesses['categories'] = yelp_businesses['categories'].str.replace(',', ' ')
-
-yelp_reviews = yelp_reviews[['business_id', 'text']]
-yelp_reviews['text'] = yelp_reviews['text'].str.replace(',', ' ')
-
-yelp_reviews = yelp_reviews.groupby('business_id')['text'].apply(list).to_frame().reset_index()
-
-# merge restaurants with their reviews
-restaurants_and_reviews = yelp_businesses.merge(yelp_reviews, left_on='business_id', right_on='business_id',
-                                                how='inner', suffixes=['_biz', '_test'])
-restaurants_and_reviews = restaurants_and_reviews.groupby('name')['text'].apply(list).to_frame().reset_index()
-restaurants_and_reviews = restaurants_and_reviews.sort_values(['name'])
-restaurants_and_reviews.to_csv('../data/big_restaurants_and_reviews.csv', index=False)
-small_businesses_and_reviews = restaurants_and_reviews.head(5000)
-small_businesses_and_reviews.to_csv('../data/small_restaurants_and_reviews.csv', index=False)
+# Get the Yelp Restaurats and Reviews data
+if small:
+    restaurants_and_reviews_file = "../data/small_restaurants_and_reviews.csv"
+    name_review_green_file = '../data/small_restaurants_reviews_ratings.csv'
+    env_term_file = '../data/small_term_based_green_rating_results.csv'
+    print("smallness achieved")
+else:
+    restaurants_and_reviews_file = "../data/big_restaurants_and_reviews.csv"
+    name_review_green_file = '../data/big_restaurants_reviews_ratings.csv'
+    env_term_file = '../data/big_term_based_green_rating_results.csv'
+    print("we livin large")
+restaurants_and_reviews = pd.read_csv(restaurants_and_reviews_file)
 
 # Add in the GRA data
 green = pd.read_csv('../data/clean_green.csv', header=0, delimiter=',')
 green = green.sort_values(['Name'])
 green = green[['Name', 'rating']]
-green.rename(str.lower, axis='columns', inplace=True)
+
+green.rename(columns={"Name": "name", "rating": "GRA_rating"}, inplace=True)
 
 # Add in the Seafood Watch Data
 seafood = pd.read_csv('../data/original_sources/SeafoodWatch.csv')
@@ -46,15 +46,30 @@ seafood.rename(index=str, columns={0: 'name'}, inplace=True)
 seafood['rating'] = 1
 seafood = seafood[['name', 'rating']]
 seafood['name'] = seafood['name'].str.upper()
-green = green.append(seafood, sort=True)
-# NO! we should add points for being in both not drop duplicates
-green.drop_duplicates(subset="name", inplace=True)
+seafood.rename(columns={"rating": "seafood_rating"}, inplace=True)
+# green = green.append(seafood, sort=True)
+# # NO! we should add points for being in both not drop duplicates
+# green.drop_duplicates(subset="name", inplace=True)
+
+# Add in the env_term_analysis data
+env_terms = pd.read_csv(env_term_file, header=0, delimiter=',')
+env_terms.rename(columns={"term_based_green_rating": "term_based_rating"}, inplace=True)
 
 # All together now
+# print(restaurants_and_reviews.head(2))
+# print(green.head(2))
+# print(seafood.head(2))
 name_review_green = restaurants_and_reviews.merge(green, left_on='name', right_on='name', how='left', suffixes=['_b', '_g'])
-name_review_green = name_review_green[['name', 'text', 'rating']]
-name_review_green = name_review_green.sort_values(['rating'])
-print(name_review_green['rating'].value_counts())
-small_name_review_green = name_review_green[:56]
-name_review_green.to_csv('../data/big_name_review_green.csv')
-small_name_review_green.to_csv('../data/small_name_review_green.csv', index=False)
+name_review_green = name_review_green[['name', 'review_text', 'stars', 'GRA_rating']]
+
+name_review_green = name_review_green.merge(seafood, left_on='name', right_on='name', how='left', suffixes=['_b', '_g'])
+name_review_green = name_review_green.merge(env_terms, left_on='name', right_on='name', how='left', suffixes=['_b', '_g'])
+name_review_green.fillna(0, inplace=True)
+
+name_review_green['overall_rating'] = name_review_green['GRA_rating'] + name_review_green['seafood_rating'] \
+                                      + name_review_green['term_based_rating']
+name_review_green = name_review_green.sort_values(['overall_rating'], ascending=False)
+
+
+print("head of name_review_green\n", name_review_green.head(10))
+name_review_green.to_csv(name_review_green_file)
