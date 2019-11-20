@@ -71,5 +71,8 @@ name_review_green['overall_rating'] = name_review_green['GRA_rating'] + name_rev
 name_review_green = name_review_green.sort_values(['overall_rating'], ascending=False)
 
 
-print("head of name_review_green\n", name_review_green.head(10))
+print("head of name_review_green\n", restaurants_and_reviews.head(10))
+
+print("overall_rating\n", name_review_green['overall_rating'].value_counts())
+print("GRA_rating\n", name_review_green['GRA_rating'].value_counts())
 name_review_green.to_csv(name_review_green_file)

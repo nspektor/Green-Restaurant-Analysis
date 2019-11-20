@@ -13,7 +13,7 @@ parser.add_argument("--small", default=False, type=bool, help="When true, run on
 args = parser.parse_args()
 small = args.small
 
-environmentalTerms = [line.rstrip('\n') for line in open("../data/helper_files/environmentalTerms.txt")]
+environmentalTerms = [line.rstrip('\n') for line in open("../data/helper_files/small_environmentalTerms.txt")]
 environmentalTerms = list(dict.fromkeys(environmentalTerms))
 if small:
     restaurants_and_reviews_file = "../data/small_restaurants_and_reviews.csv"
