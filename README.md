@@ -32,39 +32,38 @@
    - Removes unnecessary columns and standardizes text
    - files required: `data/original_sources/GRA.csv`
    - files generated: `data/clean_green.csv`
-4. [merge_GRA_with_yelp_restaurants.py](https://github.com/nspektor/Green-Restaurant-Analysis/tree/master/pythonScripts/merge_GRA_with_yelp_restaurants.py)
+4. [merge_restaurants_and_reviews.py](https://github.com/nspektor/Green-Restaurant-Analysis/tree/master/pythonScripts/merge_restaurants_and_reviews.py)
     - Imports: pandas
     - Merges yelp business and review data into one pandas dataframe by combining the text from each review about a restaurant into one large block of text
     - Merges entries for separate locations of the same franchise into one row in our dataset. 
-    - Added a column to indicate whether the restaurant appeared in the 
-    lists we got from the Green Restaurant Association and Seafood Watch.
    - files required:  `data/original_sources/YelpReview.csv`, 
-                      `data/clean_yelp_restaurants.csv`, 
-                      `data/original_sources/SeafoodWatch.csv`,
-                      `data/clean_green.csv`
+                      `data/clean_yelp_restaurants.csv` 
    - files generated: `data/big_restaurants_and_reviews.csv`, 
-                      `data/small_restaurants_and_reviews.csv`,
-                      `data/big_name_review_green.csv`,
-                      `data/small_name_review_green.csv`
+                      `data/small_restaurants_and_reviews.csv`
 5. [environmental_term_analysis.py](https://github.com/nspektor/Green-Restaurant-Analysis/tree/master/pythonScripts/environmental_term_analysis.py)
-    - Imports:  pandas, NLTK to pre-process review text
+    - Can be run with --Small True to use the small dataset so it does not take as long
+    - Imports:  pandas
     - Create a green rating for each restaurant based on whether it’s reviews contains “environmental” terms. 
         - Examples of environmental terms: compost, recycle, green, local, vegan, vegetarian
         - If 1% or more of the total words in the reviews were environmental words, the restaurant got a score of 3, the rest got scores of 0, 1, or 2 but in our final dataset we only counted those with a score of 3 as “green”
     - files required: `data/helper_files/environmentalTerms.txt`, 
-                      `data/big_name_review_green.csv`, 
-                      `data/small_name_review_green.csv`,
-   - files generated: `data/big_term_based_green_rating_results.csv`, 
-                      `data/small_term_based_green_rating_results.csv`,
-                      `data/big_comprehensive_results.csv`,
-                      `data/small_comprehensive_results.csv`
-                      
-## Plan
-- Analyze current data from all green sources, compare with yelp stars as a success metric
+                      `data/big_restaurants_and_reviews.csv` or 
+                      `data/small_restaurants_and_reviews.csv` 
+   - file generated: `data/big_term_based_green_rating_results.csv` or 
+                      `data/small_term_based_green_rating_results.csv`
+6. [merge_all_ratings.py](https://github.com/nspektor/Green-Restaurant-Analysis/tree/master/pythonScripts/merge_all_ratings.py)
+    - Can be run with --Small True to use the small dataset so it does not take as long
+    - Imports: pandas
+    - Creates the Final dataset which contains a row for each restaurant
+        - columns: name, review text, yelp stars, GRA rating, seafood watch rating, term based rating, overall green rating 
+   - files required:  `data/small_restaurants_and_reviews.csv` or `data/big_restaurants_and_reviews.csv`
+                      `data/small_term_based_green_rating_results.csv` or `data/big_term_based_green_rating_results.csv`
+   - file generated: `data/small_restaurants_reviews_ratings.csv` or `data/big_restaurants_reviews_ratings.csv`, 
+          
+## Future Work
 - Run better stemming and lemmatization algorithms on the reviews and determine topics for green restaurant reviews and non green restaurant reviews. 
 - Expand list of green restaurants by using more alternative data sources (such as blogs or web scraping)
 - Use nyc open data in addition to yelp stars to measure if green restaurants are more successful
-
 ##### This project stems partially from the NYU Big Data Science course project by Nellie Spektor, Valerie Angulo, and Andrea Waxman. [here](https://github.com/nspektor/Environmental-Consciousness-in-the-Restaurant-Business)
 ##### Nellie Spektor has since continued working on this project under Professor Anasse Bari
 

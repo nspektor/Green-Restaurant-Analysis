@@ -1,5 +1,6 @@
 .idea/*
 .ipynb_checkpoints/
 *.csv
+big_*
 *.rtfd
 .DS_Store
